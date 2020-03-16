@@ -9,15 +9,16 @@ public class Main {
         int number;
         Player player1 = new Player();
         Player player2 = new Player();
+        Player currentPlayer = player1;
 
         while (controller.isGameRunning()){
-            System.out.println(player1.getName() + "'s turn");
+            System.out.println(currentPlayer.getName() + "'s turn");
             board.draw();
             System.out.println("Select number:");
             number = inputNumber.nextInt();
-            board.addSymbol(player1.getSymbol(), number);
+            board.addSymbol(currentPlayer.getSymbol(), number);
             if (controller.checkThree(board.getBoard())){
-                System.out.println(player1.getName() + " wins");
+                System.out.println(currentPlayer.getName() + " wins");
                 break;
             }
             if (controller.isFullBoard(board.getBoard())){
@@ -25,19 +26,7 @@ public class Main {
                 break;
             }
 
-            System.out.println(player2.getName() + "' turn");
-            board.draw();
-            System.out.println("Select number:");
-            number = inputNumber.nextInt();
-            board.addSymbol(player2.getSymbol(), number);
-            if (controller.checkThree(board.getBoard())){
-                System.out.println(player2.getName() + " wins");
-                break;
-            }
-            if (controller.isFullBoard(board.getBoard())){
-                System.out.println("Draw");
-                break;
-            }
+            currentPlayer = currentPlayer == player1 ? player2 : player1;
 
         }
     }
