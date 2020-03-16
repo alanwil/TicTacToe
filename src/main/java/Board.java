@@ -1,54 +1,49 @@
 import java.util.Scanner;
 
 public class Board {
-    private char[][] board;
+    private char[] board;
 
     public Board() {
-        this.board = new char[5][5];
+        this.board = new char[9];
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                if (j%2 != 0){
-                    board[i][j] = '|';
-                }
-                if (i%2 != 0){
-                    board[i][j] = '-';
-                }
-            }
+            board[i] = (char) (i + 49);
         }
     }
 
     public void draw(){
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                System.out.print(board[i][j]);
+        for (int i = 1; i <= board.length; i++) {
+            System.out.print(this.board[i-1] + "  ");
+            if (i%3 == 0){
+                System.out.println();
             }
-            System.out.println();
         }
-        System.out.println();
     }
 
-    public char[][] getBoard() {
+    public char[] getBoard() {
         return board;
     }
 
-    private boolean isPlaceAvailable(int y, int x) {
-        if (board[y][x] != 'X' && board[y][x] != 'O'){
-            return true;
+    private boolean isPlaceAvailable(int i) {
+        if (i >= 0 && i <= 8){
+            if (Character.isDigit(this.board[i])){
+                return true;
+            }
         }
         return false;
     }
 
     public void addSymbol(char c, int number){
-        Field field = Field.values()[number-1];
-        boolean isAvailable = isPlaceAvailable(field.indexY, field.indexX);
+
+        boolean isAvailable = isPlaceAvailable(number-1);
         while (!isAvailable){
             System.out.println("Place taken, try another one");
             Scanner input = new Scanner(System.in);
             number = input.nextInt();
-            field = Field.values()[number-1];
-            isAvailable = isPlaceAvailable(field.indexY, field.indexX);
+            //board[number-1] = c;;
+            isAvailable = isPlaceAvailable(number-1);
         }
-        board[field.indexY][field.indexX] = c;
+        board[number-1] = c;
 
     }
+
 }
